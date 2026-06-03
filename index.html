@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Peikin's Vox Tak | 作品集展示</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin:0; padding:0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(145deg, #f9eefb 0%, #f3e3ff 40%, #e0d4ff 100%); min-height: 100vh; color: #1e1e2f; overflow-x: hidden; position: relative; }
+        .bg-deco { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events: none; z-index:0; overflow: hidden; }
+        .deco-shape { position: absolute; background: radial-gradient(circle, rgba(100,80,255,0.2), rgba(180,130,255,0.05)); filter: blur(60px); border-radius: 50%; animation: floatShape 18s infinite alternate; }
+        .deco-shape-1 { width:450px; height:450px; top:-150px; left:-100px; animation-duration:22s; }
+        .deco-shape-2 { width:600px; height:600px; bottom:-200px; right:-150px; filter:blur(80px); animation-duration:25s; }
+        .deco-shape-3 { width:280px; height:280px; top:40%; left:70%; background:#ff7eb360; animation-duration:20s; }
+        .deco-ring { position: absolute; border:1px solid rgba(255,255,245,0.35); border-radius:50%; background:none; backdrop-filter:blur(4px); animation:spinRing 30s infinite linear; }
+        .ring1 { width:380px; height:380px; top:20%; left:-80px; border-width:2px; }
+        .ring2 { width:580px; height:580px; bottom:10%; right:-150px; border-width:1.5px; border-color:rgba(79,70,229,0.3); animation-direction:reverse; }
+        @keyframes floatShape { 0%{ transform:translate(0,0) scale(1); opacity:0.5; } 100%{ transform:translate(40px,30px) scale(1.1); opacity:0.8; } }
+        @keyframes spinRing { 100%{ transform:rotate(360deg); } }
+        .app-wrapper { position: relative; z-index:2; max-width:1300px; margin:0 auto; padding:1.2rem 2rem 4rem; }
+        .glass-nav { position:sticky; top:1rem; z-index:30; background:rgba(255,255,255,0.45); backdrop-filter:blur(16px); border-radius:2.5rem; padding:0.8rem 2rem; margin-bottom:3rem; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1rem; box-shadow:0 8px 24px rgba(0,0,0,0.05), 0 0 0 1px rgba(255,255,255,0.6); border:1px solid rgba(255,255,240,0.7); }
+        .logo h2 { font-weight:800; font-size:1.7rem; background:linear-gradient(135deg, #1e1a6e, #3b28cc); -webkit-background-clip:text; background-clip:text; color:transparent; letter-spacing:-0.5px; }
+        .logo span { font-weight:500; font-size:0.8rem; background:none; color:#2c2c4e; display:block; line-height:1.2; }
+        .filter-group { display:flex; gap:0.75rem; }
+        .filter-btn { background:rgba(255,255,255,0.5); backdrop-filter:blur(4px); border:none; padding:0.5rem 1.3rem; border-radius:40px; font-weight:600; font-size:0.9rem; color:#1f1a3e; cursor:pointer; transition:0.25s; border:1px solid rgba(255,255,255,0.6); }
+        .filter-btn.active { background:#1e3aff; color:white; box-shadow:0 4px 12px rgba(30,58,255,0.3); }
+        .cards-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:2rem 1.8rem; margin:2rem auto; }
+        .video-card { width:280px; background:rgba(255,250,255,0.45); backdrop-filter:blur(12px); border-radius:1.8rem; overflow:hidden; box-shadow:0 20px 35px -12px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.5); transition:all 0.3s; cursor:pointer; position:relative; z-index:1; }
+        .video-card:nth-child(odd) { transform:rotate(1.2deg) translateY(6px); }
+        .video-card:nth-child(even) { transform:rotate(-0.8deg) translateY(-4px); }
+        .video-card:hover { transform:rotate(0deg) translateY(-10px) scale(1.02); z-index:15; background:rgba(255,255,255,0.7); box-shadow:0 28px 40px -12px rgba(0,0,0,0.35); }
+        .thumbnail { position:relative; aspect-ratio:3/4; background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center; background-color:#d9c8ff; }
+        .thumb-overlay { position:absolute; inset:0; background:rgba(20,10,40,0.3); display:flex; align-items:center; justify-content:center; }
+        .play-icon-badge { font-size:3rem; color:white; background:rgba(0,0,0,0.35); width:70px; height:70px; border-radius:50%; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(6px); transition:0.2s; }
+        .video-card:hover .play-icon-badge { transform:scale(1.05); background:#1e3affcc; }
+        .card-info { padding:1rem 1rem 1.3rem; }
+        .card-title { font-weight:800; font-size:1.25rem; color:#12101c; display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:6px; }
+        .card-category { font-size:0.7rem; font-weight:700; background:rgba(30,58,255,0.2); padding:0.2rem 0.7rem; border-radius:20px; color:#1010aa; }
+        .fullscreen-modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,10,30,0.85); backdrop-filter:blur(25px); z-index:1000; display:flex; align-items:center; justify-content:center; visibility:hidden; opacity:0; transition:0.2s; cursor:pointer; }
+        .fullscreen-modal.active { visibility:visible; opacity:1; }
+        .modal-container { width:90%; max-width:1100px; background:rgba(0,0,0,0.3); border-radius:2rem; backdrop-filter:blur(10px); padding:1.5rem; position:relative; border:1px solid rgba(255,255,255,0.4); }
+        .modal-video-wrapper { border-radius:1.5rem; overflow:hidden; background:#000; }
+        .modal-video-wrapper video { width:100%; display:block; max-height:70vh; }
+        .close-modal { position:absolute; top:-20px; right:-20px; background:#1e1a6e; color:white; width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.6rem; cursor:pointer; border:none; transition:0.2s; }
+        .close-modal:hover { background:#ff4d4d; transform:rotate(90deg); }
+        .modal-title { color:white; margin-top:1rem; text-align:center; font-weight:700; }
+        .no-result { text-align:center; padding:3rem; background:rgba(255,255,245,0.3); border-radius:2rem; backdrop-filter:blur(6px); }
+        footer { text-align:center; margin-top:3rem; font-size:0.9rem; font-weight:500; opacity:0.85; }
+        @media (max-width:780px) { .app-wrapper { padding:1rem; } .glass-nav { flex-direction:column; align-items:stretch; } .video-card { width:260px; } }
+    </style>
+</head>
+<body>
+<div class="bg-deco"><div class="deco-shape deco-shape-1"></div><div class="deco-shape deco-shape-2"></div><div class="deco-shape deco-shape-3"></div><div class="deco-ring ring1"></div><div class="deco-ring ring2"></div></div>
+<div class="app-wrapper">
+    <nav class="glass-nav"><div class="logo"><h2>Peikin's Vox Tak <span>口播·作品集</span></h2></div><div class="filter-group" id="filterGroup"><button data-filter="all" class="filter-btn active">全部</button><button data-filter="口播" class="filter-btn">口播</button></div></nav>
+    <div class="cards-grid" id="cardsGrid"></div>
+    <footer>✦ 点击卡片全屏播放 ✦ 永久作品展示 ✦</footer>
+</div>
+<div id="videoModal" class="fullscreen-modal"><div class="modal-container"><div class="modal-video-wrapper"><video id="modalVideo" controls></video></div><div class="modal-title" id="modalVideoTitle"></div><button class="close-modal" id="closeModalBtn"><i class="fas fa-times"></i></button></div></div>
+
+<script>
+    const worksData = [
+        {
+            id: 1,
+            title: "小盖剪帽帽-第一期练习",
+            category: "口播",
+            videoUrl: "https://github.com/lulu001-spec/my-video-works/releases/download/v1.0/peikin_video_01.mp4",
+            thumbImage: null,
+            thumbGradient: "linear-gradient(135deg, #a18cd1, #fbc2eb)"
+        },
+        {
+            id: 2,
+            title: "我的第二个口播作品",
+            category: "口播",
+            videoUrl: "https://github.com/lulu001-spec/my-video-works/releases/download/v1.0/peikin_video_02.mp4",
+            thumbImage: null,
+            thumbGradient: "linear-gradient(135deg, #ff9a9e, #fad0c4)"
+        }
+    ];
+
+    let currentFilter = "all";
+
+    function escapeHtml(str) { return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;')); }
+    function renderCard(work) {
+        let bgStyle = work.thumbImage ? `background-image: url('${work.thumbImage}'); background-size: cover;` : `background: ${work.thumbGradient || 'linear-gradient(125deg, #b1b5ff, #e3b5ff)'};`;
+        return `<div class="video-card" data-id="${work.id}"><div class="thumbnail" style="${bgStyle}"><div class="thumb-overlay"><div class="play-icon-badge"><i class="fas fa-play"></i></div></div></div><div class="card-info"><div class="card-title"><span>${escapeHtml(work.title)}</span><span class="card-category"><i class="fas fa-comment-dots"></i> ${escapeHtml(work.category)}</span></div></div></div>`;
+    }
+    function renderGrid() {
+        const filtered = currentFilter === "all" ? worksData : worksData.filter(w => w.category === currentFilter);
+        const container = document.getElementById('cardsGrid');
+        if (!filtered.length) { container.innerHTML = '<div class="no-result">暂无作品</div>'; return; }
+        container.innerHTML = filtered.map(w => renderCard(w)).join('');
+        document.querySelectorAll('.video-card').forEach(card => {
+            const id = parseInt(card.dataset.id);
+            const work = worksData.find(w => w.id === id);
+            if (work) card.addEventListener('click', () => openFullscreenPlayer(work));
+        });
+    }
+    const modalEl = document.getElementById('videoModal');
+    const modalVideo = document.getElementById('modalVideo');
+    const modalTitle = document.getElementById('modalVideoTitle');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    function openFullscreenPlayer(work) {
+        modalVideo.src = work.videoUrl;
+        modalVideo.load();
+        modalTitle.innerText = work.title;
+        modalEl.classList.add('active');
+        setTimeout(() => modalVideo.play().catch(e=>{}), 100);
+        document.body.style.overflow = 'hidden';
+    }
+    function closeModal() { modalEl.classList.remove('active'); modalVideo.pause(); modalVideo.src = ""; document.body.style.overflow = ''; }
+    modalEl.addEventListener('click', (e) => { if (e.target === modalEl) closeModal(); });
+    closeModalBtn.addEventListener('click', closeModal);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modalEl.classList.contains('active')) closeModal(); });
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = btn.dataset.filter;
+            renderGrid();
+        });
+    });
+    renderGrid();
+</script>
+</body>
+</html>
